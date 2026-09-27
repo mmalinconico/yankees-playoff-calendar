@@ -1,23 +1,13 @@
 import json
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from zoneinfo import ZoneInfo
+
 
 EVENTS_FILE = Path("events.json")
 OUTPUT_FILE = Path("yankees-playoffs.ics")
 
-YANKEES_TEAM_ID = 147
-EASTERN = ZoneInfo("America/New_York")
-
 GAME_DURATION = timedelta(hours=3)
 RETENTION = timedelta(days=7)
-
-SERIES_NAMES = {
-    "F": "Wild Card Series",
-    "D": "ALDS",
-    "L": "ALCS",
-    "W": "World Series",
-}
 
 
 def escape_ics(text):
@@ -45,11 +35,6 @@ def format_utc(dt):
 
 
 def get_series_name(game):
-    game_type = game.get("gameType")
-
-    if game_type in SERIES_NAMES:
-        return SERIES_NAMES[game_type]
-
     return game.get("seriesDescription") or "MLB Postseason"
 
 
@@ -87,22 +72,25 @@ def get_summary(game):
 
 
 def get_description(game):
-    lines = []
-
-    lines.append(f"Matchup: {get_matchup(game)}")
-    lines.append(f"Series: {get_series_name(game)}")
+    lines = [
+        f"Matchup: {get_matchup(game)}",
+        f"Series: {get_series_name(game)}",
+    ]
 
     game_number = get_game_number(game)
+
     if game_number:
         lines.append(game_number)
 
     broadcasts = game.get("broadcasts") or []
+
     if broadcasts:
         lines.append(f"TV/Streaming: {', '.join(broadcasts)}")
     else:
         lines.append("TV/Streaming: TBA")
 
     status = game.get("status")
+
     if status:
         lines.append(f"Status: {status}")
 
@@ -111,7 +99,27 @@ def get_description(game):
 
 def get_location(game):
     venue = game.get("venue") or {}
-    return venue.get("name") or "TBA"
+
+    name = venue.get("name")
+    city = venue.get("city")
+    state = venue.get("state")
+
+    parts = []
+
+    if name:
+        parts.append(name)
+
+    city_state = ", ".join(
+        part for part in [city, state] if part
+    )
+
+    if city_state:
+        parts.append(city_state)
+
+    if parts:
+        return ", ".join(parts)
+
+    return "TBA"
 
 
 def should_keep_game(game, now):
@@ -120,8 +128,11 @@ def should_keep_game(game, now):
     if start is None:
         return False
 
-    # Keep upcoming games and completed/recent games for seven days.
-    return start + RETENTION >= now
+    end = start + GAME_DURATION
+
+    # Keep future games plus completed/recent games for seven days
+    # after their scheduled end time.
+    return end + RETENTION >= now
 
 
 def build_event(game, now):
@@ -135,7 +146,7 @@ def build_event(game, now):
     game_pk = game.get("gamePk")
     uid = f"yankees-playoffs-{game_pk}@mmalinconico.github.io"
 
-    lines = [
+    return [
         "BEGIN:VEVENT",
         f"UID:{uid}",
         f"DTSTAMP:{format_utc(now)}",
@@ -147,8 +158,6 @@ def build_event(game, now):
         "END:VEVENT",
     ]
 
-    return lines
-
 
 def main():
     if not EVENTS_FILE.exists():
@@ -156,7 +165,9 @@ def main():
             f"{EVENTS_FILE} does not exist. Run fetch_events.py first."
         )
 
-    data = json.loads(EVENTS_FILE.read_text(encoding="utf-8"))
+    data = json.loads(
+        EVENTS_FILE.read_text(encoding="utf-8")
+    )
 
     now = datetime.now(timezone.utc)
 
