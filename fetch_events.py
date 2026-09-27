@@ -41,6 +41,24 @@ def fetch_schedule(season):
     return response.json()
 
 
+def get_tv_streaming_broadcasts(game):
+    broadcasts = []
+
+    for broadcast in game.get("broadcasts", []):
+        broadcast_type = (broadcast.get("type") or "").upper()
+        name = broadcast.get("name")
+
+        # MLB's feed mixes television and radio broadcasts together.
+        # Keep television/streaming entries only.
+        if broadcast_type not in {"TV", "STREAMING"}:
+            continue
+
+        if name and name not in broadcasts:
+            broadcasts.append(name)
+
+    return broadcasts
+
+
 def normalize_game(game):
     teams = game.get("teams", {})
 
@@ -55,13 +73,6 @@ def normalize_game(game):
         yankees_home = False
 
     venue = game.get("venue", {})
-
-    broadcasts = []
-    for broadcast in game.get("broadcasts", []):
-        name = broadcast.get("name")
-        if name and name not in broadcasts:
-            broadcasts.append(name)
-
     series_status = game.get("seriesStatus", {})
 
     return {
@@ -81,7 +92,7 @@ def normalize_game(game):
             "id": venue.get("id"),
             "name": venue.get("name"),
         },
-        "broadcasts": broadcasts,
+        "broadcasts": get_tv_streaming_broadcasts(game),
     }
 
 
