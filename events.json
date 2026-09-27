@@ -1,0 +1,124 @@
+{
+  "season": 2026,
+  "team": "New York Yankees",
+  "teamId": 147,
+  "games": [
+    {
+      "gamePk": 849851,
+      "gameDate": "2026-09-30T00:00:00Z",
+      "status": "Scheduled",
+      "gameType": "F",
+      "seriesDescription": "AL Wild Card Series",
+      "seriesGameNumber": 1,
+      "gamesInSeries": 3,
+      "seriesStatus": {
+        "gameNumber": 1,
+        "totalGames": 3,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Wild Card Series",
+        "shortDescription": "AL Wild Card Series Game 1",
+        "shortName": "AL Wild Card Series",
+        "abbreviation": "ALWC"
+      },
+      "homeTeam": "New York Yankees",
+      "awayTeam": "Boston Red Sox",
+      "opponent": "Boston Red Sox",
+      "yankeesHome": true,
+      "venue": {
+        "id": 3313,
+        "name": "Yankee Stadium"
+      },
+      "broadcasts": [
+        "NBC/Peacock",
+        "WFAN 660/101.9 FM",
+        "WEEI 93.7",
+        "ESPN Radio",
+        "Universo/ Peacock",
+        "WADO 1280",
+        "WCCM 1490 AM (SP)",
+        "WESX 1230 AM (SP)"
+      ]
+    },
+    {
+      "gamePk": 849848,
+      "gameDate": "2026-10-01T00:00:00Z",
+      "status": "Scheduled",
+      "gameType": "F",
+      "seriesDescription": "AL Wild Card Series",
+      "seriesGameNumber": 2,
+      "gamesInSeries": 3,
+      "seriesStatus": {
+        "gameNumber": 2,
+        "totalGames": 3,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Wild Card Series",
+        "shortDescription": "AL Wild Card Series Game 2",
+        "shortName": "AL Wild Card Series",
+        "abbreviation": "ALWC"
+      },
+      "homeTeam": "New York Yankees",
+      "awayTeam": "Boston Red Sox",
+      "opponent": "Boston Red Sox",
+      "yankeesHome": true,
+      "venue": {
+        "id": 3313,
+        "name": "Yankee Stadium"
+      },
+      "broadcasts": [
+        "NBC/Peacock",
+        "WFAN 660/101.9 FM",
+        "WEEI 93.7",
+        "ESPN Radio",
+        "Universo/ Peacock",
+        "WADO 1280",
+        "WCCM 1490 AM (SP)",
+        "WESX 1230 AM (SP)"
+      ]
+    },
+    {
+      "gamePk": 849847,
+      "gameDate": "2026-10-02T00:00:00Z",
+      "status": "Scheduled",
+      "gameType": "F",
+      "seriesDescription": "AL Wild Card Series",
+      "seriesGameNumber": 3,
+      "gamesInSeries": 3,
+      "seriesStatus": {
+        "gameNumber": 3,
+        "totalGames": 3,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Wild Card Series",
+        "shortDescription": "AL Wild Card Series Game 3",
+        "shortName": "AL Wild Card Series",
+        "abbreviation": "ALWC"
+      },
+      "homeTeam": "New York Yankees",
+      "awayTeam": "Boston Red Sox",
+      "opponent": "Boston Red Sox",
+      "yankeesHome": true,
+      "venue": {
+        "id": 3313,
+        "name": "Yankee Stadium"
+      },
+      "broadcasts": [
+        "NBC/Peacock",
+        "WFAN 660/101.9 FM",
+        "WEEI 93.7",
+        "ESPN Radio",
+        "Universo/ Peacock",
+        "WADO 1280",
+        "WCCM 1490 AM (SP)",
+        "WESX 1230 AM (SP)"
+      ]
+    }
+  ]
+}
