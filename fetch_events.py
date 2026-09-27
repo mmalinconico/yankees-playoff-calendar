@@ -46,11 +46,22 @@ def get_tv_streaming_broadcasts(game):
 
     for broadcast in game.get("broadcasts", []):
         broadcast_type = (broadcast.get("type") or "").upper()
-        name = broadcast.get("name")
+        name = broadcast.get("name") or ""
 
-        # MLB's feed mixes television and radio broadcasts together.
+        # MLB's feed mixes television, streaming, and radio broadcasts.
         # Keep television/streaming entries only.
         if broadcast_type not in {"TV", "STREAMING"}:
+            continue
+
+        # Exclude Spanish-language broadcasts/simulcasts.
+        lower_name = name.lower()
+
+        if (
+            "universo" in lower_name
+            or "telemundo" in lower_name
+            or "univision" in lower_name
+            or "tudn" in lower_name
+        ):
             continue
 
         if name and name not in broadcasts:
