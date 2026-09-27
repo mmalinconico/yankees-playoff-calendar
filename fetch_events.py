@@ -28,7 +28,7 @@ def fetch_schedule(season):
         "teamId": YANKEES_TEAM_ID,
         "season": season,
         "gameTypes": POSTSEASON_GAME_TYPES,
-        "hydrate": "broadcasts(all),seriesStatus",
+        "hydrate": "broadcasts(all),seriesStatus,venue(location)",
     }
 
     response = requests.get(
@@ -48,7 +48,6 @@ def get_tv_streaming_broadcasts(game):
         broadcast_type = (broadcast.get("type") or "").upper()
         name = broadcast.get("name") or ""
 
-        # MLB's feed mixes television, streaming, and radio broadcasts.
         # Keep television/streaming entries only.
         if broadcast_type not in {"TV", "STREAMING"}:
             continue
@@ -84,6 +83,7 @@ def normalize_game(game):
         yankees_home = False
 
     venue = game.get("venue", {})
+    venue_location = venue.get("location", {})
     series_status = game.get("seriesStatus", {})
 
     return {
@@ -102,6 +102,9 @@ def normalize_game(game):
         "venue": {
             "id": venue.get("id"),
             "name": venue.get("name"),
+            "city": venue_location.get("city"),
+            "state": venue_location.get("stateAbbrev")
+            or venue_location.get("state"),
         },
         "broadcasts": get_tv_streaming_broadcasts(game),
     }
