@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Check annual active window
         id: window
@@ -35,7 +35,7 @@ jobs:
 
       - name: Set up Python
         if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: "pip"
