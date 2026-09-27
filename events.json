@@ -29,7 +29,9 @@
       "yankeesHome": true,
       "venue": {
         "id": 3313,
-        "name": "Yankee Stadium"
+        "name": "Yankee Stadium",
+        "city": "Bronx",
+        "state": "NY"
       },
       "broadcasts": [
         "NBC/Peacock"
@@ -61,7 +63,9 @@
       "yankeesHome": true,
       "venue": {
         "id": 3313,
-        "name": "Yankee Stadium"
+        "name": "Yankee Stadium",
+        "city": "Bronx",
+        "state": "NY"
       },
       "broadcasts": [
         "NBC/Peacock"
@@ -93,7 +97,9 @@
       "yankeesHome": true,
       "venue": {
         "id": 3313,
-        "name": "Yankee Stadium"
+        "name": "Yankee Stadium",
+        "city": "Bronx",
+        "state": "NY"
       },
       "broadcasts": [
         "NBC/Peacock"
