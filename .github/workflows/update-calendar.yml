@@ -1,0 +1,70 @@
+name: Update Yankees Playoff Calendar
+
+on:
+  schedule:
+    # Every 4 hours. The job itself limits execution to Sep 20-Nov 10.
+    - cron: "17 */4 * * *"
+
+  # Allows us to run and test it manually from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-calendar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check annual active window
+        id: window
+        shell: bash
+        run: |
+          TODAY=$(TZ=America/New_York date +%m%d)
+
+          if [ "$TODAY" -ge 0920 ] && [ "$TODAY" -le 1110 ]; then
+            echo "active=true" >> "$GITHUB_OUTPUT"
+            echo "Inside Yankees postseason calendar window."
+          else
+            echo "active=false" >> "$GITHUB_OUTPUT"
+            echo "Outside Yankees postseason calendar window."
+          fi
+
+      - name: Set up Python
+        if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
+        run: pip install -r requirements.txt
+
+      - name: Fetch Yankees postseason schedule
+        if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
+        run: python fetch_events.py
+
+      - name: Generate calendar
+        if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
+        run: python generate_calendar.py
+
+      - name: Commit calendar updates
+        if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add events.json yankees-playoffs.ics
+
+          if git diff --cached --quiet; then
+            echo "No calendar changes."
+            exit 0
+          fi
+
+          git commit -m "Update Yankees playoff calendar"
+          git push
