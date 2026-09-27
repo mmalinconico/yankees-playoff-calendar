@@ -6,7 +6,9 @@ import requests
 
 
 YANKEES_TEAM_ID = 147
+
 MLB_SCHEDULE_URL = "https://statsapi.mlb.com/api/v1/schedule"
+MLB_VENUE_URL = "https://statsapi.mlb.com/api/v1/venues/{venue_id}"
 
 OUTPUT_FILE = Path("events.json")
 
@@ -28,7 +30,7 @@ def fetch_schedule(season):
         "teamId": YANKEES_TEAM_ID,
         "season": season,
         "gameTypes": POSTSEASON_GAME_TYPES,
-        "hydrate": "broadcasts(all),seriesStatus,venue(location)",
+        "hydrate": "broadcasts(all),seriesStatus",
     }
 
     response = requests.get(
@@ -41,6 +43,39 @@ def fetch_schedule(season):
     return response.json()
 
 
+def fetch_venue(venue_id):
+    if not venue_id:
+        return {}
+
+    response = requests.get(
+        MLB_VENUE_URL.format(venue_id=venue_id),
+        params={
+            "hydrate": "location",
+        },
+        timeout=30,
+    )
+    response.raise_for_status()
+
+    data = response.json()
+    venues = data.get("venues", [])
+
+    if not venues:
+        return {}
+
+    venue = venues[0]
+    location = venue.get("location", {})
+
+    return {
+        "id": venue.get("id"),
+        "name": venue.get("name"),
+        "city": location.get("city"),
+        "state": (
+            location.get("stateAbbrev")
+            or location.get("state")
+        ),
+    }
+
+
 def get_tv_streaming_broadcasts(game):
     broadcasts = []
 
@@ -48,6 +83,7 @@ def get_tv_streaming_broadcasts(game):
         broadcast_type = (broadcast.get("type") or "").upper()
         name = broadcast.get("name") or ""
 
+        # MLB's feed mixes television, streaming, and radio broadcasts.
         # Keep television/streaming entries only.
         if broadcast_type not in {"TV", "STREAMING"}:
             continue
@@ -69,7 +105,7 @@ def get_tv_streaming_broadcasts(game):
     return broadcasts
 
 
-def normalize_game(game):
+def normalize_game(game, venue_cache):
     teams = game.get("teams", {})
 
     away = teams.get("away", {}).get("team", {})
@@ -82,8 +118,22 @@ def normalize_game(game):
         opponent = home
         yankees_home = False
 
-    venue = game.get("venue", {})
-    venue_location = venue.get("location", {})
+    schedule_venue = game.get("venue", {})
+    venue_id = schedule_venue.get("id")
+
+    if venue_id not in venue_cache:
+        venue_cache[venue_id] = fetch_venue(venue_id)
+
+    venue = venue_cache.get(venue_id, {})
+
+    # Fall back to the schedule response if the separate venue lookup
+    # does not return a venue name.
+    if not venue.get("name"):
+        venue["name"] = schedule_venue.get("name")
+
+    if not venue.get("id"):
+        venue["id"] = venue_id
+
     series_status = game.get("seriesStatus", {})
 
     return {
@@ -99,13 +149,7 @@ def normalize_game(game):
         "awayTeam": away.get("name"),
         "opponent": opponent.get("name"),
         "yankeesHome": yankees_home,
-        "venue": {
-            "id": venue.get("id"),
-            "name": venue.get("name"),
-            "city": venue_location.get("city"),
-            "state": venue_location.get("stateAbbrev")
-            or venue_location.get("state"),
-        },
+        "venue": venue,
         "broadcasts": get_tv_streaming_broadcasts(game),
     }
 
@@ -118,10 +162,16 @@ def main():
     data = fetch_schedule(season)
 
     games = []
+    venue_cache = {}
 
     for date_block in data.get("dates", []):
         for game in date_block.get("games", []):
-            games.append(normalize_game(game))
+            games.append(
+                normalize_game(
+                    game,
+                    venue_cache,
+                )
+            )
 
     output = {
         "season": season,
