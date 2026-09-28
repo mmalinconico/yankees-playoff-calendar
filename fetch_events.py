@@ -108,8 +108,11 @@ def get_tv_streaming_broadcasts(game):
 def normalize_game(game, venue_cache):
     teams = game.get("teams", {})
 
-    away = teams.get("away", {}).get("team", {})
-    home = teams.get("home", {}).get("team", {})
+    away_info = teams.get("away", {})
+    home_info = teams.get("home", {})
+
+    away = away_info.get("team", {})
+    home = home_info.get("team", {})
 
     if home.get("id") == YANKEES_TEAM_ID:
         opponent = away
@@ -124,22 +127,24 @@ def normalize_game(game, venue_cache):
     if venue_id not in venue_cache:
         venue_cache[venue_id] = fetch_venue(venue_id)
 
-    venue = venue_cache.get(venue_id, {})
+    venue = venue_cache.get(venue_id, {}).copy()
 
-    # Fall back to the schedule response if the separate venue lookup
-    # does not return a venue name.
+    # Fall back to the schedule response if the venue lookup
+    # does not provide these values.
     if not venue.get("name"):
         venue["name"] = schedule_venue.get("name")
 
     if not venue.get("id"):
         venue["id"] = venue_id
 
+    status = game.get("status", {})
     series_status = game.get("seriesStatus", {})
 
     return {
         "gamePk": game.get("gamePk"),
         "gameDate": game.get("gameDate"),
-        "status": game.get("status", {}).get("detailedState"),
+        "status": status.get("detailedState"),
+        "statusAbstract": status.get("abstractGameState"),
         "gameType": game.get("gameType"),
         "seriesDescription": game.get("seriesDescription"),
         "seriesGameNumber": game.get("seriesGameNumber"),
@@ -149,6 +154,10 @@ def normalize_game(game, venue_cache):
         "awayTeam": away.get("name"),
         "opponent": opponent.get("name"),
         "yankeesHome": yankees_home,
+        "homeScore": home_info.get("score"),
+        "awayScore": away_info.get("score"),
+        "homeWinner": home_info.get("isWinner"),
+        "awayWinner": away_info.get("isWinner"),
         "venue": venue,
         "broadcasts": get_tv_streaming_broadcasts(game),
     }
