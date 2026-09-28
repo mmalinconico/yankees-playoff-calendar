@@ -27,28 +27,229 @@ def parse_game_date(value):
     if not value:
         return None
 
-    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    return datetime.fromisoformat(
+        value.replace("Z", "+00:00")
+    )
 
 
 def format_utc(dt):
-    return dt.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return dt.astimezone(
+        timezone.utc
+    ).strftime("%Y%m%dT%H%M%SZ")
+
+
+def is_final_game(game):
+    abstract_status = (
+        game.get("statusAbstract") or ""
+    ).lower()
+
+    detailed_status = (
+        game.get("status") or ""
+    ).lower()
+
+    return (
+        abstract_status == "final"
+        or detailed_status in {
+            "final",
+            "game over",
+            "completed early",
+        }
+    )
+
+
+def get_game_winner(game):
+    if not is_final_game(game):
+        return None
+
+    yankees_home = game.get("yankeesHome")
+
+    if yankees_home:
+        yankees_winner = game.get("homeWinner")
+        opponent_winner = game.get("awayWinner")
+        yankees_score = game.get("homeScore")
+        opponent_score = game.get("awayScore")
+    else:
+        yankees_winner = game.get("awayWinner")
+        opponent_winner = game.get("homeWinner")
+        yankees_score = game.get("awayScore")
+        opponent_score = game.get("homeScore")
+
+    if yankees_winner is True:
+        return "yankees"
+
+    if opponent_winner is True:
+        return "opponent"
+
+    # Fallback to the final score if MLB does not supply isWinner.
+    try:
+        yankees_score = int(yankees_score)
+        opponent_score = int(opponent_score)
+
+        if yankees_score > opponent_score:
+            return "yankees"
+
+        if opponent_score > yankees_score:
+            return "opponent"
+    except (TypeError, ValueError):
+        pass
+
+    return None
+
+
+def get_series_key(game):
+    # A Yankees postseason schedule can contain only one Yankees
+    # series for each postseason game type in a given season.
+    return game.get("gameType") or "postseason"
+
+
+def get_series_total_games(game):
+    total = game.get("gamesInSeries")
+
+    if not total:
+        total = (
+            game.get("seriesStatus") or {}
+        ).get("totalGames")
+
+    try:
+        return int(total)
+    except (TypeError, ValueError):
+        return None
+
+
+def build_series_states(games):
+    states = {}
+
+    for game in games:
+        key = get_series_key(game)
+        total_games = get_series_total_games(game)
+
+        if key not in states:
+            states[key] = {
+                "totalGames": total_games,
+                "yankeesWins": 0,
+                "opponentWins": 0,
+                "countedGames": set(),
+            }
+        elif (
+            not states[key]["totalGames"]
+            and total_games
+        ):
+            states[key]["totalGames"] = total_games
+
+        game_pk = game.get("gamePk")
+
+        if game_pk in states[key]["countedGames"]:
+            continue
+
+        winner = get_game_winner(game)
+
+        if winner == "yankees":
+            states[key]["yankeesWins"] += 1
+            states[key]["countedGames"].add(game_pk)
+
+        elif winner == "opponent":
+            states[key]["opponentWins"] += 1
+            states[key]["countedGames"].add(game_pk)
+
+    return states
+
+
+def wins_needed(state):
+    total_games = state.get("totalGames")
+
+    if not total_games:
+        return None
+
+    return (total_games // 2) + 1
+
+
+def series_is_clinched(state):
+    needed = wins_needed(state)
+
+    if not needed:
+        return False
+
+    return (
+        state.get("yankeesWins", 0) >= needed
+        or state.get("opponentWins", 0) >= needed
+    )
+
+
+def game_is_if_necessary(game, state):
+    # If the game already happened, it obviously turned out
+    # to be necessary.
+    if is_final_game(game):
+        return False
+
+    if not state:
+        return False
+
+    needed = wins_needed(state)
+
+    if not needed:
+        return False
+
+    try:
+        game_number = int(
+            game.get("seriesGameNumber")
+        )
+    except (TypeError, ValueError):
+        return False
+
+    yankees_wins = state.get("yankeesWins", 0)
+    opponent_wins = state.get("opponentWins", 0)
+
+    completed_games = (
+        yankees_wins + opponent_wins
+    )
+
+    # Number of still-unplayed games that would occur before
+    # this particular game.
+    games_before_target = max(
+        0,
+        game_number - 1 - completed_games,
+    )
+
+    current_leader_wins = max(
+        yankees_wins,
+        opponent_wins,
+    )
+
+    # If either team could possibly reach the clinching total
+    # before this game, then this game is not yet guaranteed
+    # to be played.
+    return (
+        current_leader_wins
+        + games_before_target
+        >= needed
+    )
 
 
 def get_series_name(game):
-    return game.get("seriesDescription") or "MLB Postseason"
+    return (
+        game.get("seriesDescription")
+        or "MLB Postseason"
+    )
 
 
-def get_game_number(game):
+def get_game_number(
+    game,
+    if_necessary=False,
+):
     number = game.get("seriesGameNumber")
     total = game.get("gamesInSeries")
 
     if number and total:
-        return f"Game {number} of {total}"
+        text = f"Game {number} of {total}"
+    elif number:
+        text = f"Game {number}"
+    else:
+        return None
 
-    if number:
-        return f"Game {number}"
+    if if_necessary:
+        text += " (If Necessary)"
 
-    return None
+    return text
 
 
 def get_matchup(game):
@@ -58,12 +259,22 @@ def get_matchup(game):
     return f"{away} at {home}"
 
 
-def get_summary(game):
+def get_summary(
+    game,
+    if_necessary=False,
+):
     opponent = game.get("opponent") or "TBD"
     series = get_series_name(game)
-    game_number = get_game_number(game)
 
-    parts = [f"Yankees vs. {opponent}", series]
+    game_number = get_game_number(
+        game,
+        if_necessary=if_necessary,
+    )
+
+    parts = [
+        f"Yankees vs. {opponent}",
+        series,
+    ]
 
     if game_number:
         parts.append(game_number)
@@ -71,13 +282,19 @@ def get_summary(game):
     return " — ".join(parts)
 
 
-def get_description(game):
+def get_description(
+    game,
+    if_necessary=False,
+):
     lines = [
         f"Matchup: {get_matchup(game)}",
         f"Series: {get_series_name(game)}",
     ]
 
-    game_number = get_game_number(game)
+    game_number = get_game_number(
+        game,
+        if_necessary=if_necessary,
+    )
 
     if game_number:
         lines.append(game_number)
@@ -85,7 +302,9 @@ def get_description(game):
     broadcasts = game.get("broadcasts") or []
 
     if broadcasts:
-        lines.append(f"TV/Streaming: {', '.join(broadcasts)}")
+        lines.append(
+            f"TV/Streaming: {', '.join(broadcasts)}"
+        )
     else:
         lines.append("TV/Streaming: TBA")
 
@@ -94,7 +313,10 @@ def get_description(game):
     if status:
         lines.append(f"Status: {status}")
 
-    return "\\n".join(escape_ics(line) for line in lines)
+    return "\\n".join(
+        escape_ics(line)
+        for line in lines
+    )
 
 
 def get_location(game):
@@ -110,7 +332,9 @@ def get_location(game):
         parts.append(name)
 
     city_state = ", ".join(
-        part for part in [city, state] if part
+        part
+        for part in [city, state]
+        if part
     )
 
     if city_state:
@@ -122,21 +346,52 @@ def get_location(game):
     return "TBA"
 
 
-def should_keep_game(game, now):
-    start = parse_game_date(game.get("gameDate"))
+def should_keep_game(
+    game,
+    now,
+    series_state,
+):
+    start = parse_game_date(
+        game.get("gameDate")
+    )
 
     if start is None:
         return False
 
+    detailed_status = (
+        game.get("status") or ""
+    ).lower()
+
+    if detailed_status in {
+        "cancelled",
+        "canceled",
+    }:
+        return False
+
+    # If the series has already been clinched, remove any
+    # unplayed games that are no longer necessary.
+    if (
+        series_state
+        and series_is_clinched(series_state)
+        and not is_final_game(game)
+    ):
+        return False
+
     end = start + GAME_DURATION
 
-    # Keep future games plus completed/recent games for seven days
-    # after their scheduled end time.
+    # Keep future games plus completed/recent games for seven
+    # days after their scheduled three-hour event window.
     return end + RETENTION >= now
 
 
-def build_event(game, now):
-    start = parse_game_date(game.get("gameDate"))
+def build_event(
+    game,
+    now,
+    if_necessary=False,
+):
+    start = parse_game_date(
+        game.get("gameDate")
+    )
 
     if start is None:
         return None
@@ -144,7 +399,10 @@ def build_event(game, now):
     end = start + GAME_DURATION
 
     game_pk = game.get("gamePk")
-    uid = f"yankees-playoffs-{game_pk}@mmalinconico.github.io"
+    uid = (
+        f"yankees-playoffs-{game_pk}"
+        "@mmalinconico.github.io"
+    )
 
     return [
         "BEGIN:VEVENT",
@@ -152,9 +410,28 @@ def build_event(game, now):
         f"DTSTAMP:{format_utc(now)}",
         f"DTSTART:{format_utc(start)}",
         f"DTEND:{format_utc(end)}",
-        f"SUMMARY:{escape_ics(get_summary(game))}",
-        f"LOCATION:{escape_ics(get_location(game))}",
-        f"DESCRIPTION:{get_description(game)}",
+        (
+            "SUMMARY:"
+            + escape_ics(
+                get_summary(
+                    game,
+                    if_necessary=if_necessary,
+                )
+            )
+        ),
+        (
+            "LOCATION:"
+            + escape_ics(
+                get_location(game)
+            )
+        ),
+        (
+            "DESCRIPTION:"
+            + get_description(
+                game,
+                if_necessary=if_necessary,
+            )
+        ),
         "END:VEVENT",
     ]
 
@@ -162,11 +439,14 @@ def build_event(game, now):
 def main():
     if not EVENTS_FILE.exists():
         raise FileNotFoundError(
-            f"{EVENTS_FILE} does not exist. Run fetch_events.py first."
+            f"{EVENTS_FILE} does not exist. "
+            "Run fetch_events.py first."
         )
 
     data = json.loads(
-        EVENTS_FILE.read_text(encoding="utf-8")
+        EVENTS_FILE.read_text(
+            encoding="utf-8"
+        )
     )
 
     now = datetime.now(timezone.utc)
@@ -174,40 +454,80 @@ def main():
     calendar_lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//Matt Malinconico//Yankees Playoff Calendar//EN",
+        (
+            "PRODID:-//Matt Malinconico//"
+            "Yankees Playoff Calendar//EN"
+        ),
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
-        "X-WR-CALNAME:Yankees Playoff Calendar",
-        "X-WR-TIMEZONE:America/New_York",
+        (
+            "X-WR-CALNAME:"
+            "Yankees Playoff Calendar"
+        ),
+        (
+            "X-WR-TIMEZONE:"
+            "America/New_York"
+        ),
     ]
 
     games = data.get("games", [])
 
     games.sort(
-        key=lambda game: game.get("gameDate") or ""
+        key=lambda game:
+        game.get("gameDate") or ""
+    )
+
+    series_states = build_series_states(
+        games
     )
 
     included = 0
 
     for game in games:
-        if not should_keep_game(game, now):
+        series_key = get_series_key(game)
+        series_state = series_states.get(
+            series_key
+        )
+
+        if not should_keep_game(
+            game,
+            now,
+            series_state,
+        ):
             continue
 
-        event_lines = build_event(game, now)
+        if_necessary = game_is_if_necessary(
+            game,
+            series_state,
+        )
+
+        event_lines = build_event(
+            game,
+            now,
+            if_necessary=if_necessary,
+        )
 
         if event_lines:
-            calendar_lines.extend(event_lines)
+            calendar_lines.extend(
+                event_lines
+            )
             included += 1
 
-    calendar_lines.append("END:VCALENDAR")
+    calendar_lines.append(
+        "END:VCALENDAR"
+    )
 
     OUTPUT_FILE.write_text(
-        "\r\n".join(calendar_lines) + "\r\n",
+        "\r\n".join(calendar_lines)
+        + "\r\n",
         encoding="utf-8",
     )
 
     print(f"Wrote {OUTPUT_FILE}")
-    print(f"Included {included} postseason game(s).")
+    print(
+        f"Included {included} "
+        "postseason game(s)."
+    )
 
 
 if __name__ == "__main__":
