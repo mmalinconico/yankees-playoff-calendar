@@ -6,8 +6,8 @@
     {
       "gamePk": 849851,
       "gameDate": "2026-09-30T00:00:00Z",
-      "status": "Scheduled",
-      "statusAbstract": "Preview",
+      "status": "Warmup",
+      "statusAbstract": "Live",
       "gameType": "F",
       "seriesDescription": "AL Wild Card Series",
       "seriesGameNumber": 1,
@@ -28,8 +28,8 @@
       "awayTeam": "Boston Red Sox",
       "opponent": "Boston Red Sox",
       "yankeesHome": true,
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 0,
+      "awayScore": 0,
       "homeWinner": null,
       "awayWinner": null,
       "venue": {
