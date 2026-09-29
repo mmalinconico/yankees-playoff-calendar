@@ -7,7 +7,7 @@ X-WR-CALNAME:Yankees Playoff Calendar
 X-WR-TIMEZONE:America/New_York
 BEGIN:VEVENT
 UID:yankees-playoffs-849851@mmalinconico.github.io
-DTSTAMP:20260929T002426Z
+DTSTAMP:20260929T104343Z
 DTSTART:20260930T000000Z
 DTEND:20260930T030000Z
 SUMMARY:Yankees vs. Boston Red Sox — AL Wild Card Series — Game 1 of 3
@@ -16,7 +16,7 @@ DESCRIPTION:Matchup: Boston Red Sox at New York Yankees\nSeries: AL Wild Card Se
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849848@mmalinconico.github.io
-DTSTAMP:20260929T002426Z
+DTSTAMP:20260929T104343Z
 DTSTART:20261001T000000Z
 DTEND:20261001T030000Z
 SUMMARY:Yankees vs. Boston Red Sox — AL Wild Card Series — Game 2 of 3
@@ -25,7 +25,7 @@ DESCRIPTION:Matchup: Boston Red Sox at New York Yankees\nSeries: AL Wild Card Se
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849847@mmalinconico.github.io
-DTSTAMP:20260929T002426Z
+DTSTAMP:20260929T104343Z
 DTSTART:20261002T000000Z
 DTEND:20261002T030000Z
 SUMMARY:Yankees vs. Boston Red Sox — AL Wild Card Series — Game 3 of 3 (If Necessary)
