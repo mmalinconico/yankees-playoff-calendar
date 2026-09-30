@@ -6,8 +6,8 @@
     {
       "gamePk": 849851,
       "gameDate": "2026-09-30T00:00:00Z",
-      "status": "Warmup",
-      "statusAbstract": "Live",
+      "status": "Final",
+      "statusAbstract": "Final",
       "gameType": "F",
       "seriesDescription": "AL Wild Card Series",
       "seriesGameNumber": 1,
@@ -15,12 +15,37 @@
       "seriesStatus": {
         "gameNumber": 1,
         "totalGames": 3,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 111,
+          "name": "Boston Red Sox",
+          "link": "/api/v1/teams/111"
+        },
         "description": "AL Wild Card Series",
         "shortDescription": "AL Wild Card Series Game 1",
+        "result": "NYY leads 1-0",
         "shortName": "AL Wild Card Series",
         "abbreviation": "ALWC"
       },
@@ -28,10 +53,10 @@
       "awayTeam": "Boston Red Sox",
       "opponent": "Boston Red Sox",
       "yankeesHome": true,
-      "homeScore": 0,
+      "homeScore": 9,
       "awayScore": 0,
-      "homeWinner": null,
-      "awayWinner": null,
+      "homeWinner": true,
+      "awayWinner": false,
       "venue": {
         "id": 3313,
         "name": "Yankee Stadium",
@@ -54,12 +79,37 @@
       "seriesStatus": {
         "gameNumber": 2,
         "totalGames": 3,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 111,
+          "name": "Boston Red Sox",
+          "link": "/api/v1/teams/111"
+        },
         "description": "AL Wild Card Series",
         "shortDescription": "AL Wild Card Series Game 2",
+        "result": "NYY leads 1-0",
         "shortName": "AL Wild Card Series",
         "abbreviation": "ALWC"
       },
@@ -93,12 +143,37 @@
       "seriesStatus": {
         "gameNumber": 3,
         "totalGames": 3,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 111,
+          "name": "Boston Red Sox",
+          "link": "/api/v1/teams/111"
+        },
         "description": "AL Wild Card Series",
         "shortDescription": "AL Wild Card Series Game 3",
+        "result": "NYY leads 1-0",
         "shortName": "AL Wild Card Series",
         "abbreviation": "ALWC"
       },
