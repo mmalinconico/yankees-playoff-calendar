@@ -70,7 +70,7 @@
     {
       "gamePk": 849848,
       "gameDate": "2026-10-01T00:00:00Z",
-      "status": "Scheduled",
+      "status": "Pre-Game",
       "statusAbstract": "Preview",
       "gameType": "F",
       "seriesDescription": "AL Wild Card Series",
@@ -117,8 +117,8 @@
       "awayTeam": "Boston Red Sox",
       "opponent": "Boston Red Sox",
       "yankeesHome": true,
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 0,
+      "awayScore": 0,
       "homeWinner": null,
       "awayWinner": null,
       "venue": {
