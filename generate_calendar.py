@@ -38,6 +38,34 @@ def format_utc(dt):
     ).strftime("%Y%m%dT%H%M%SZ")
 
 
+def format_date(dt):
+    return dt.strftime("%Y%m%d")
+
+
+def is_placeholder_time(game):
+    """
+    MLB uses :33 placeholder timestamps for postseason games
+    whose actual start times have not yet been announced.
+
+    Example:
+    2026-10-07T07:33:00Z -> 3:33 AM Eastern
+
+    A real MLB start time should replace this placeholder once
+    the schedule is finalized.
+    """
+    start = parse_game_date(
+        game.get("gameDate")
+    )
+
+    if start is None:
+        return False
+
+    return (
+        not is_final_game(game)
+        and start.minute == 33
+    )
+
+
 def is_final_game(game):
     abstract_status = (
         game.get("statusAbstract") or ""
@@ -80,7 +108,6 @@ def get_game_winner(game):
     if opponent_winner is True:
         return "opponent"
 
-    # Fallback to the final score if MLB does not supply isWinner.
     try:
         yankees_score = int(yankees_score)
         opponent_score = int(opponent_score)
@@ -97,8 +124,6 @@ def get_game_winner(game):
 
 
 def get_series_key(game):
-    # A Yankees postseason schedule can contain only one Yankees
-    # series for each postseason game type in a given season.
     return game.get("gameType") or "postseason"
 
 
@@ -176,8 +201,6 @@ def series_is_clinched(state):
 
 
 def game_is_if_necessary(game, state):
-    # If the game already happened, it obviously turned out
-    # to be necessary.
     if is_final_game(game):
         return False
 
@@ -203,8 +226,6 @@ def game_is_if_necessary(game, state):
         yankees_wins + opponent_wins
     )
 
-    # Number of still-unplayed games that would occur before
-    # this particular game.
     games_before_target = max(
         0,
         game_number - 1 - completed_games,
@@ -215,9 +236,6 @@ def game_is_if_necessary(game, state):
         opponent_wins,
     )
 
-    # If either team could possibly reach the clinching total
-    # before this game, then this game is not yet guaranteed
-    # to be played.
     return (
         current_leader_wins
         + games_before_target
@@ -262,6 +280,7 @@ def get_matchup(game):
 def get_summary(
     game,
     if_necessary=False,
+    time_tbd=False,
 ):
     opponent = game.get("opponent") or "TBD"
     series = get_series_name(game)
@@ -279,12 +298,16 @@ def get_summary(
     if game_number:
         parts.append(game_number)
 
+    if time_tbd:
+        parts.append("TBD")
+
     return " — ".join(parts)
 
 
 def get_description(
     game,
     if_necessary=False,
+    time_tbd=False,
 ):
     lines = [
         f"Matchup: {get_matchup(game)}",
@@ -298,6 +321,9 @@ def get_description(
 
     if game_number:
         lines.append(game_number)
+
+    if time_tbd:
+        lines.append("Start Time: TBD")
 
     broadcasts = game.get("broadcasts") or []
 
@@ -368,8 +394,6 @@ def should_keep_game(
     }:
         return False
 
-    # If the series has already been clinched, remove any
-    # unplayed games that are no longer necessary.
     if (
         series_state
         and series_is_clinched(series_state)
@@ -377,10 +401,13 @@ def should_keep_game(
     ):
         return False
 
+    if is_placeholder_time(game):
+        return start.date() >= (
+            now - RETENTION
+        ).date()
+
     end = start + GAME_DURATION
 
-    # Keep future games plus completed/recent games for seven
-    # days after their scheduled three-hour event window.
     return end + RETENTION >= now
 
 
@@ -396,44 +423,81 @@ def build_event(
     if start is None:
         return None
 
-    end = start + GAME_DURATION
-
     game_pk = game.get("gamePk")
+
     uid = (
         f"yankees-playoffs-{game_pk}"
         "@mmalinconico.github.io"
     )
 
-    return [
+    time_tbd = is_placeholder_time(game)
+
+    lines = [
         "BEGIN:VEVENT",
         f"UID:{uid}",
         f"DTSTAMP:{format_utc(now)}",
-        f"DTSTART:{format_utc(start)}",
-        f"DTEND:{format_utc(end)}",
-        (
-            "SUMMARY:"
-            + escape_ics(
-                get_summary(
+    ]
+
+    if time_tbd:
+        event_date = start.date()
+
+        next_date = (
+            event_date + timedelta(days=1)
+        )
+
+        lines.extend(
+            [
+                (
+                    "DTSTART;VALUE=DATE:"
+                    + event_date.strftime("%Y%m%d")
+                ),
+                (
+                    "DTEND;VALUE=DATE:"
+                    + next_date.strftime("%Y%m%d")
+                ),
+            ]
+        )
+    else:
+        end = start + GAME_DURATION
+
+        lines.extend(
+            [
+                f"DTSTART:{format_utc(start)}",
+                f"DTEND:{format_utc(end)}",
+            ]
+        )
+
+    lines.extend(
+        [
+            (
+                "SUMMARY:"
+                + escape_ics(
+                    get_summary(
+                        game,
+                        if_necessary=if_necessary,
+                        time_tbd=time_tbd,
+                    )
+                )
+            ),
+            (
+                "LOCATION:"
+                + escape_ics(
+                    get_location(game)
+                )
+            ),
+            (
+                "DESCRIPTION:"
+                + get_description(
                     game,
                     if_necessary=if_necessary,
+                    time_tbd=time_tbd,
                 )
-            )
-        ),
-        (
-            "LOCATION:"
-            + escape_ics(
-                get_location(game)
-            )
-        ),
-        (
-            "DESCRIPTION:"
-            + get_description(
-                game,
-                if_necessary=if_necessary,
-            )
-        ),
-        "END:VEVENT",
-    ]
+            ),
+            "END:VEVENT",
+        ]
+    )
+
+    return lines
 
 
 def main():
@@ -485,6 +549,7 @@ def main():
 
     for game in games:
         series_key = get_series_key(game)
+
         series_state = series_states.get(
             series_key
         )
