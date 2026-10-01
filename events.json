@@ -70,8 +70,8 @@
     {
       "gamePk": 849848,
       "gameDate": "2026-10-01T00:00:00Z",
-      "status": "Pre-Game",
-      "statusAbstract": "Preview",
+      "status": "Final",
+      "statusAbstract": "Final",
       "gameType": "F",
       "seriesDescription": "AL Wild Card Series",
       "seriesGameNumber": 2,
@@ -80,8 +80,8 @@
         "gameNumber": 2,
         "totalGames": 3,
         "isTied": false,
-        "isOver": false,
-        "wins": 1,
+        "isOver": true,
+        "wins": 2,
         "losses": 0,
         "winningTeam": {
           "springLeague": {
@@ -109,7 +109,7 @@
         },
         "description": "AL Wild Card Series",
         "shortDescription": "AL Wild Card Series Game 2",
-        "result": "NYY leads 1-0",
+        "result": "NYY wins 2-0",
         "shortName": "AL Wild Card Series",
         "abbreviation": "ALWC"
       },
@@ -117,10 +117,10 @@
       "awayTeam": "Boston Red Sox",
       "opponent": "Boston Red Sox",
       "yankeesHome": true,
-      "homeScore": 0,
-      "awayScore": 0,
-      "homeWinner": null,
-      "awayWinner": null,
+      "homeScore": 9,
+      "awayScore": 2,
+      "homeWinner": true,
+      "awayWinner": false,
       "venue": {
         "id": 3313,
         "name": "Yankee Stadium",
@@ -132,54 +132,109 @@
       ]
     },
     {
-      "gamePk": 849847,
-      "gameDate": "2026-10-02T00:00:00Z",
+      "gamePk": 849835,
+      "gameDate": "2026-10-03T22:30:00Z",
       "status": "Scheduled",
       "statusAbstract": "Preview",
-      "gameType": "F",
-      "seriesDescription": "AL Wild Card Series",
+      "gameType": "D",
+      "seriesDescription": "AL Division Series",
+      "seriesGameNumber": 1,
+      "gamesInSeries": 5,
+      "seriesStatus": {
+        "gameNumber": 1,
+        "totalGames": 5,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Division Series",
+        "shortDescription": "ALDS Game 1",
+        "shortName": "ALDS",
+        "abbreviation": "ALDS"
+      },
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "New York Yankees",
+      "opponent": "Tampa Bay Rays",
+      "yankeesHome": false,
+      "homeScore": null,
+      "awayScore": null,
+      "homeWinner": null,
+      "awayWinner": null,
+      "venue": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "city": "St. Petersburg",
+        "state": "FL"
+      },
+      "broadcasts": [
+        "TBS/HBO MAX",
+        "TruTV"
+      ]
+    },
+    {
+      "gamePk": 849839,
+      "gameDate": "2026-10-06T00:00:00Z",
+      "status": "Scheduled",
+      "statusAbstract": "Preview",
+      "gameType": "D",
+      "seriesDescription": "AL Division Series",
+      "seriesGameNumber": 2,
+      "gamesInSeries": 5,
+      "seriesStatus": {
+        "gameNumber": 2,
+        "totalGames": 5,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Division Series",
+        "shortDescription": "ALDS Game 2",
+        "shortName": "ALDS",
+        "abbreviation": "ALDS"
+      },
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "New York Yankees",
+      "opponent": "Tampa Bay Rays",
+      "yankeesHome": false,
+      "homeScore": null,
+      "awayScore": null,
+      "homeWinner": null,
+      "awayWinner": null,
+      "venue": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "city": "St. Petersburg",
+        "state": "FL"
+      },
+      "broadcasts": [
+        "TBS/HBO MAX",
+        "TruTV"
+      ]
+    },
+    {
+      "gamePk": 849838,
+      "gameDate": "2026-10-07T07:33:00Z",
+      "status": "Scheduled",
+      "statusAbstract": "Preview",
+      "gameType": "D",
+      "seriesDescription": "AL Division Series",
       "seriesGameNumber": 3,
-      "gamesInSeries": 3,
+      "gamesInSeries": 5,
       "seriesStatus": {
         "gameNumber": 3,
-        "totalGames": 3,
-        "isTied": false,
+        "totalGames": 5,
+        "isTied": true,
         "isOver": false,
-        "wins": 1,
+        "wins": 0,
         "losses": 0,
-        "winningTeam": {
-          "springLeague": {
-            "id": 115,
-            "name": "Grapefruit League",
-            "link": "/api/v1/league/115",
-            "abbreviation": "GL"
-          },
-          "allStarStatus": "N",
-          "id": 147,
-          "name": "New York Yankees",
-          "link": "/api/v1/teams/147"
-        },
-        "losingTeam": {
-          "springLeague": {
-            "id": 115,
-            "name": "Grapefruit League",
-            "link": "/api/v1/league/115",
-            "abbreviation": "GL"
-          },
-          "allStarStatus": "N",
-          "id": 111,
-          "name": "Boston Red Sox",
-          "link": "/api/v1/teams/111"
-        },
-        "description": "AL Wild Card Series",
-        "shortDescription": "AL Wild Card Series Game 3",
-        "result": "NYY leads 1-0",
-        "shortName": "AL Wild Card Series",
-        "abbreviation": "ALWC"
+        "description": "AL Division Series",
+        "shortDescription": "ALDS Game 3",
+        "shortName": "ALDS",
+        "abbreviation": "ALDS"
       },
       "homeTeam": "New York Yankees",
-      "awayTeam": "Boston Red Sox",
-      "opponent": "Boston Red Sox",
+      "awayTeam": "Tampa Bay Rays",
+      "opponent": "Tampa Bay Rays",
       "yankeesHome": true,
       "homeScore": null,
       "awayScore": null,
@@ -192,7 +247,88 @@
         "state": "NY"
       },
       "broadcasts": [
-        "NBC/Peacock"
+        "TBS/HBO MAX",
+        "TruTV"
+      ]
+    },
+    {
+      "gamePk": 849837,
+      "gameDate": "2026-10-08T07:33:00Z",
+      "status": "Scheduled",
+      "statusAbstract": "Preview",
+      "gameType": "D",
+      "seriesDescription": "AL Division Series",
+      "seriesGameNumber": 4,
+      "gamesInSeries": 5,
+      "seriesStatus": {
+        "gameNumber": 4,
+        "totalGames": 5,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Division Series",
+        "shortDescription": "ALDS Game 4",
+        "shortName": "ALDS",
+        "abbreviation": "ALDS"
+      },
+      "homeTeam": "New York Yankees",
+      "awayTeam": "Tampa Bay Rays",
+      "opponent": "Tampa Bay Rays",
+      "yankeesHome": true,
+      "homeScore": null,
+      "awayScore": null,
+      "homeWinner": null,
+      "awayWinner": null,
+      "venue": {
+        "id": 3313,
+        "name": "Yankee Stadium",
+        "city": "Bronx",
+        "state": "NY"
+      },
+      "broadcasts": [
+        "TBS/HBO MAX",
+        "TruTV"
+      ]
+    },
+    {
+      "gamePk": 849836,
+      "gameDate": "2026-10-10T07:33:00Z",
+      "status": "Scheduled",
+      "statusAbstract": "Preview",
+      "gameType": "D",
+      "seriesDescription": "AL Division Series",
+      "seriesGameNumber": 5,
+      "gamesInSeries": 5,
+      "seriesStatus": {
+        "gameNumber": 5,
+        "totalGames": 5,
+        "isTied": true,
+        "isOver": false,
+        "wins": 0,
+        "losses": 0,
+        "description": "AL Division Series",
+        "shortDescription": "ALDS Game 5",
+        "shortName": "ALDS",
+        "abbreviation": "ALDS"
+      },
+      "homeTeam": "Tampa Bay Rays",
+      "awayTeam": "New York Yankees",
+      "opponent": "Tampa Bay Rays",
+      "yankeesHome": false,
+      "homeScore": null,
+      "awayScore": null,
+      "homeWinner": null,
+      "awayWinner": null,
+      "venue": {
+        "id": 12,
+        "name": "Tropicana Field",
+        "city": "St. Petersburg",
+        "state": "FL"
+      },
+      "broadcasts": [
+        "TBS/HBO MAX",
+        "TruTV"
       ]
     }
   ]
