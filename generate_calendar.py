@@ -274,7 +274,7 @@ def get_matchup(game):
     away = game.get("awayTeam") or "TBD"
     home = game.get("homeTeam") or "TBD"
 
-    return f"{away} at {home}"
+    return f"{away} @ {home}"
 
 
 def get_summary(
@@ -282,7 +282,7 @@ def get_summary(
     if_necessary=False,
     time_tbd=False,
 ):
-    opponent = game.get("opponent") or "TBD"
+    matchup = get_matchup(game)
     series = get_series_name(game)
 
     game_number = get_game_number(
@@ -291,7 +291,7 @@ def get_summary(
     )
 
     parts = [
-        f"Yankees vs. {opponent}",
+        matchup,
         series,
     ]
 
