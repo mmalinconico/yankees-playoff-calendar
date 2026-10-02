@@ -213,7 +213,7 @@
     },
     {
       "gamePk": 849838,
-      "gameDate": "2026-10-07T07:33:00Z",
+      "gameDate": "2026-10-08T00:00:00Z",
       "status": "Scheduled",
       "statusAbstract": "Preview",
       "gameType": "D",
@@ -253,7 +253,7 @@
     },
     {
       "gamePk": 849837,
-      "gameDate": "2026-10-08T07:33:00Z",
+      "gameDate": "2026-10-09T00:00:00Z",
       "status": "Scheduled",
       "statusAbstract": "Preview",
       "gameType": "D",
@@ -293,7 +293,7 @@
     },
     {
       "gamePk": 849836,
-      "gameDate": "2026-10-10T07:33:00Z",
+      "gameDate": "2026-10-11T00:00:00Z",
       "status": "Scheduled",
       "statusAbstract": "Preview",
       "gameType": "D",

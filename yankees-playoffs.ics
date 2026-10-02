@@ -7,7 +7,7 @@ X-WR-CALNAME:Yankees Playoff Calendar
 X-WR-TIMEZONE:America/New_York
 BEGIN:VEVENT
 UID:yankees-playoffs-849851@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
+DTSTAMP:20261002T054440Z
 DTSTART:20260930T000000Z
 DTEND:20260930T030000Z
 SUMMARY:Yankees vs. Boston Red Sox — AL Wild Card Series — Game 1 of 3
@@ -16,7 +16,7 @@ DESCRIPTION:Matchup: Boston Red Sox at New York Yankees\nSeries: AL Wild Card Se
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849848@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
+DTSTAMP:20261002T054440Z
 DTSTART:20261001T000000Z
 DTEND:20261001T030000Z
 SUMMARY:Yankees vs. Boston Red Sox — AL Wild Card Series — Game 2 of 3
@@ -25,7 +25,7 @@ DESCRIPTION:Matchup: Boston Red Sox at New York Yankees\nSeries: AL Wild Card Se
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849835@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
+DTSTAMP:20261002T054440Z
 DTSTART:20261003T223000Z
 DTEND:20261004T013000Z
 SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 1 of 5
@@ -34,7 +34,7 @@ DESCRIPTION:Matchup: New York Yankees at Tampa Bay Rays\nSeries: AL Division Ser
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849839@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
+DTSTAMP:20261002T054440Z
 DTSTART:20261006T000000Z
 DTEND:20261006T030000Z
 SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 2 of 5
@@ -43,29 +43,29 @@ DESCRIPTION:Matchup: New York Yankees at Tampa Bay Rays\nSeries: AL Division Ser
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849838@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
-DTSTART;VALUE=DATE:20261007
-DTEND;VALUE=DATE:20261008
-SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 3 of 5 — TBD
+DTSTAMP:20261002T054440Z
+DTSTART:20261008T000000Z
+DTEND:20261008T030000Z
+SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 3 of 5
 LOCATION:Yankee Stadium\, Bronx\, NY
-DESCRIPTION:Matchup: Tampa Bay Rays at New York Yankees\nSeries: AL Division Series\nGame 3 of 5\nStart Time: TBD\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
+DESCRIPTION:Matchup: Tampa Bay Rays at New York Yankees\nSeries: AL Division Series\nGame 3 of 5\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849837@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
-DTSTART;VALUE=DATE:20261008
-DTEND;VALUE=DATE:20261009
-SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 4 of 5 (If Necessary) — TBD
+DTSTAMP:20261002T054440Z
+DTSTART:20261009T000000Z
+DTEND:20261009T030000Z
+SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 4 of 5 (If Necessary)
 LOCATION:Yankee Stadium\, Bronx\, NY
-DESCRIPTION:Matchup: Tampa Bay Rays at New York Yankees\nSeries: AL Division Series\nGame 4 of 5 (If Necessary)\nStart Time: TBD\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
+DESCRIPTION:Matchup: Tampa Bay Rays at New York Yankees\nSeries: AL Division Series\nGame 4 of 5 (If Necessary)\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849836@mmalinconico.github.io
-DTSTAMP:20261001T210325Z
-DTSTART;VALUE=DATE:20261010
-DTEND;VALUE=DATE:20261011
-SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 5 of 5 (If Necessary) — TBD
+DTSTAMP:20261002T054440Z
+DTSTART:20261011T000000Z
+DTEND:20261011T030000Z
+SUMMARY:Yankees vs. Tampa Bay Rays — AL Division Series — Game 5 of 5 (If Necessary)
 LOCATION:Tropicana Field\, St. Petersburg\, FL
-DESCRIPTION:Matchup: New York Yankees at Tampa Bay Rays\nSeries: AL Division Series\nGame 5 of 5 (If Necessary)\nStart Time: TBD\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
+DESCRIPTION:Matchup: New York Yankees at Tampa Bay Rays\nSeries: AL Division Series\nGame 5 of 5 (If Necessary)\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
 END:VEVENT
 END:VCALENDAR
