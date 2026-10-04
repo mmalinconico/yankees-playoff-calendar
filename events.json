@@ -134,8 +134,8 @@
     {
       "gamePk": 849835,
       "gameDate": "2026-10-03T22:30:00Z",
-      "status": "In Progress",
-      "statusAbstract": "Live",
+      "status": "Final",
+      "statusAbstract": "Final",
       "gameType": "D",
       "seriesDescription": "AL Division Series",
       "seriesGameNumber": 1,
@@ -143,12 +143,37 @@
       "seriesStatus": {
         "gameNumber": 1,
         "totalGames": 5,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 139,
+          "name": "Tampa Bay Rays",
+          "link": "/api/v1/teams/139"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 1",
+        "result": "TB leads 1-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -156,10 +181,10 @@
       "awayTeam": "New York Yankees",
       "opponent": "Tampa Bay Rays",
       "yankeesHome": false,
-      "homeScore": 0,
+      "homeScore": 1,
       "awayScore": 0,
-      "homeWinner": null,
-      "awayWinner": null,
+      "homeWinner": true,
+      "awayWinner": false,
       "venue": {
         "id": 12,
         "name": "Tropicana Field",
@@ -183,12 +208,37 @@
       "seriesStatus": {
         "gameNumber": 2,
         "totalGames": 5,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 139,
+          "name": "Tampa Bay Rays",
+          "link": "/api/v1/teams/139"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 2",
+        "result": "TB leads 1-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -223,12 +273,37 @@
       "seriesStatus": {
         "gameNumber": 3,
         "totalGames": 5,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 139,
+          "name": "Tampa Bay Rays",
+          "link": "/api/v1/teams/139"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 3",
+        "result": "TB leads 1-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -263,12 +338,37 @@
       "seriesStatus": {
         "gameNumber": 4,
         "totalGames": 5,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 139,
+          "name": "Tampa Bay Rays",
+          "link": "/api/v1/teams/139"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 4",
+        "result": "TB leads 1-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -303,12 +403,37 @@
       "seriesStatus": {
         "gameNumber": 5,
         "totalGames": 5,
-        "isTied": true,
+        "isTied": false,
         "isOver": false,
-        "wins": 0,
+        "wins": 1,
         "losses": 0,
+        "winningTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 139,
+          "name": "Tampa Bay Rays",
+          "link": "/api/v1/teams/139"
+        },
+        "losingTeam": {
+          "springLeague": {
+            "id": 115,
+            "name": "Grapefruit League",
+            "link": "/api/v1/league/115",
+            "abbreviation": "GL"
+          },
+          "allStarStatus": "N",
+          "id": 147,
+          "name": "New York Yankees",
+          "link": "/api/v1/teams/147"
+        },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 5",
+        "result": "TB leads 1-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
