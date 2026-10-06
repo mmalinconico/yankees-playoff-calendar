@@ -199,8 +199,8 @@
     {
       "gamePk": 849839,
       "gameDate": "2026-10-06T00:00:00Z",
-      "status": "In Progress",
-      "statusAbstract": "Live",
+      "status": "Final",
+      "statusAbstract": "Final",
       "gameType": "D",
       "seriesDescription": "AL Division Series",
       "seriesGameNumber": 2,
@@ -210,7 +210,7 @@
         "totalGames": 5,
         "isTied": false,
         "isOver": false,
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "winningTeam": {
           "springLeague": {
@@ -238,7 +238,7 @@
         },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 2",
-        "result": "TB leads 1-0",
+        "result": "TB leads 2-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -246,10 +246,10 @@
       "awayTeam": "New York Yankees",
       "opponent": "Tampa Bay Rays",
       "yankeesHome": false,
-      "homeScore": 1,
-      "awayScore": 1,
-      "homeWinner": null,
-      "awayWinner": null,
+      "homeScore": 5,
+      "awayScore": 2,
+      "homeWinner": true,
+      "awayWinner": false,
       "venue": {
         "id": 12,
         "name": "Tropicana Field",
@@ -275,7 +275,7 @@
         "totalGames": 5,
         "isTied": false,
         "isOver": false,
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "winningTeam": {
           "springLeague": {
@@ -303,7 +303,7 @@
         },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 3",
-        "result": "TB leads 1-0",
+        "result": "TB leads 2-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -340,7 +340,7 @@
         "totalGames": 5,
         "isTied": false,
         "isOver": false,
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "winningTeam": {
           "springLeague": {
@@ -368,7 +368,7 @@
         },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 4",
-        "result": "TB leads 1-0",
+        "result": "TB leads 2-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -405,7 +405,7 @@
         "totalGames": 5,
         "isTied": false,
         "isOver": false,
-        "wins": 1,
+        "wins": 2,
         "losses": 0,
         "winningTeam": {
           "springLeague": {
@@ -433,7 +433,7 @@
         },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 5",
-        "result": "TB leads 1-0",
+        "result": "TB leads 2-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
