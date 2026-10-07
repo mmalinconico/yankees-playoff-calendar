@@ -264,7 +264,7 @@
     {
       "gamePk": 849838,
       "gameDate": "2026-10-08T00:00:00Z",
-      "status": "Scheduled",
+      "status": "Pre-Game",
       "statusAbstract": "Preview",
       "gameType": "D",
       "seriesDescription": "AL Division Series",
@@ -311,8 +311,8 @@
       "awayTeam": "Tampa Bay Rays",
       "opponent": "Tampa Bay Rays",
       "yankeesHome": true,
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 0,
+      "awayScore": 0,
       "homeWinner": null,
       "awayWinner": null,
       "venue": {
