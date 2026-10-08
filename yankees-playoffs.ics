@@ -6,17 +6,8 @@ METHOD:PUBLISH
 X-WR-CALNAME:Yankees Playoff Calendar
 X-WR-TIMEZONE:America/New_York
 BEGIN:VEVENT
-UID:yankees-playoffs-849848@mmalinconico.github.io
-DTSTAMP:20261007T212007Z
-DTSTART:20261001T000000Z
-DTEND:20261001T030000Z
-SUMMARY:Boston Red Sox @ New York Yankees — AL Wild Card Series — Game 2 of 3
-LOCATION:Yankee Stadium\, Bronx\, NY
-DESCRIPTION:Matchup: Boston Red Sox @ New York Yankees\nSeries: AL Wild Card Series\nGame 2 of 3\nTV/Streaming: NBC/Peacock\nStatus: Final
-END:VEVENT
-BEGIN:VEVENT
 UID:yankees-playoffs-849835@mmalinconico.github.io
-DTSTAMP:20261007T212007Z
+DTSTAMP:20261008T061111Z
 DTSTART:20261003T223000Z
 DTEND:20261004T013000Z
 SUMMARY:New York Yankees @ Tampa Bay Rays — AL Division Series — Game 1 of 5
@@ -25,7 +16,7 @@ DESCRIPTION:Matchup: New York Yankees @ Tampa Bay Rays\nSeries: AL Division Seri
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849839@mmalinconico.github.io
-DTSTAMP:20261007T212007Z
+DTSTAMP:20261008T061111Z
 DTSTART:20261006T000000Z
 DTEND:20261006T030000Z
 SUMMARY:New York Yankees @ Tampa Bay Rays — AL Division Series — Game 2 of 5
@@ -34,29 +25,11 @@ DESCRIPTION:Matchup: New York Yankees @ Tampa Bay Rays\nSeries: AL Division Seri
 END:VEVENT
 BEGIN:VEVENT
 UID:yankees-playoffs-849838@mmalinconico.github.io
-DTSTAMP:20261007T212007Z
+DTSTAMP:20261008T061111Z
 DTSTART:20261008T000000Z
 DTEND:20261008T030000Z
 SUMMARY:Tampa Bay Rays @ New York Yankees — AL Division Series — Game 3 of 5
 LOCATION:Yankee Stadium\, Bronx\, NY
-DESCRIPTION:Matchup: Tampa Bay Rays @ New York Yankees\nSeries: AL Division Series\nGame 3 of 5\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Pre-Game
-END:VEVENT
-BEGIN:VEVENT
-UID:yankees-playoffs-849837@mmalinconico.github.io
-DTSTAMP:20261007T212007Z
-DTSTART:20261009T000000Z
-DTEND:20261009T030000Z
-SUMMARY:Tampa Bay Rays @ New York Yankees — AL Division Series — Game 4 of 5 (If Necessary)
-LOCATION:Yankee Stadium\, Bronx\, NY
-DESCRIPTION:Matchup: Tampa Bay Rays @ New York Yankees\nSeries: AL Division Series\nGame 4 of 5 (If Necessary)\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
-END:VEVENT
-BEGIN:VEVENT
-UID:yankees-playoffs-849836@mmalinconico.github.io
-DTSTAMP:20261007T212007Z
-DTSTART:20261011T000000Z
-DTEND:20261011T030000Z
-SUMMARY:New York Yankees @ Tampa Bay Rays — AL Division Series — Game 5 of 5 (If Necessary)
-LOCATION:Tropicana Field\, St. Petersburg\, FL
-DESCRIPTION:Matchup: New York Yankees @ Tampa Bay Rays\nSeries: AL Division Series\nGame 5 of 5 (If Necessary)\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Scheduled
+DESCRIPTION:Matchup: Tampa Bay Rays @ New York Yankees\nSeries: AL Division Series\nGame 3 of 5\nTV/Streaming: TBS/HBO MAX\, TruTV\nStatus: Final
 END:VEVENT
 END:VCALENDAR

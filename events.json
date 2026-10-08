@@ -264,8 +264,8 @@
     {
       "gamePk": 849838,
       "gameDate": "2026-10-08T00:00:00Z",
-      "status": "Pre-Game",
-      "statusAbstract": "Preview",
+      "status": "Final",
+      "statusAbstract": "Final",
       "gameType": "D",
       "seriesDescription": "AL Division Series",
       "seriesGameNumber": 3,
@@ -274,8 +274,8 @@
         "gameNumber": 3,
         "totalGames": 5,
         "isTied": false,
-        "isOver": false,
-        "wins": 2,
+        "isOver": true,
+        "wins": 3,
         "losses": 0,
         "winningTeam": {
           "springLeague": {
@@ -303,7 +303,7 @@
         },
         "description": "AL Division Series",
         "shortDescription": "ALDS Game 3",
-        "result": "TB leads 2-0",
+        "result": "TB wins 3-0",
         "shortName": "ALDS",
         "abbreviation": "ALDS"
       },
@@ -311,145 +311,15 @@
       "awayTeam": "Tampa Bay Rays",
       "opponent": "Tampa Bay Rays",
       "yankeesHome": true,
-      "homeScore": 0,
-      "awayScore": 0,
-      "homeWinner": null,
-      "awayWinner": null,
+      "homeScore": 3,
+      "awayScore": 4,
+      "homeWinner": false,
+      "awayWinner": true,
       "venue": {
         "id": 3313,
         "name": "Yankee Stadium",
         "city": "Bronx",
         "state": "NY"
-      },
-      "broadcasts": [
-        "TBS/HBO MAX",
-        "TruTV"
-      ]
-    },
-    {
-      "gamePk": 849837,
-      "gameDate": "2026-10-09T00:00:00Z",
-      "status": "Scheduled",
-      "statusAbstract": "Preview",
-      "gameType": "D",
-      "seriesDescription": "AL Division Series",
-      "seriesGameNumber": 4,
-      "gamesInSeries": 5,
-      "seriesStatus": {
-        "gameNumber": 4,
-        "totalGames": 5,
-        "isTied": false,
-        "isOver": false,
-        "wins": 2,
-        "losses": 0,
-        "winningTeam": {
-          "springLeague": {
-            "id": 115,
-            "name": "Grapefruit League",
-            "link": "/api/v1/league/115",
-            "abbreviation": "GL"
-          },
-          "allStarStatus": "N",
-          "id": 139,
-          "name": "Tampa Bay Rays",
-          "link": "/api/v1/teams/139"
-        },
-        "losingTeam": {
-          "springLeague": {
-            "id": 115,
-            "name": "Grapefruit League",
-            "link": "/api/v1/league/115",
-            "abbreviation": "GL"
-          },
-          "allStarStatus": "N",
-          "id": 147,
-          "name": "New York Yankees",
-          "link": "/api/v1/teams/147"
-        },
-        "description": "AL Division Series",
-        "shortDescription": "ALDS Game 4",
-        "result": "TB leads 2-0",
-        "shortName": "ALDS",
-        "abbreviation": "ALDS"
-      },
-      "homeTeam": "New York Yankees",
-      "awayTeam": "Tampa Bay Rays",
-      "opponent": "Tampa Bay Rays",
-      "yankeesHome": true,
-      "homeScore": null,
-      "awayScore": null,
-      "homeWinner": null,
-      "awayWinner": null,
-      "venue": {
-        "id": 3313,
-        "name": "Yankee Stadium",
-        "city": "Bronx",
-        "state": "NY"
-      },
-      "broadcasts": [
-        "TBS/HBO MAX",
-        "TruTV"
-      ]
-    },
-    {
-      "gamePk": 849836,
-      "gameDate": "2026-10-11T00:00:00Z",
-      "status": "Scheduled",
-      "statusAbstract": "Preview",
-      "gameType": "D",
-      "seriesDescription": "AL Division Series",
-      "seriesGameNumber": 5,
-      "gamesInSeries": 5,
-      "seriesStatus": {
-        "gameNumber": 5,
-        "totalGames": 5,
-        "isTied": false,
-        "isOver": false,
-        "wins": 2,
-        "losses": 0,
-        "winningTeam": {
-          "springLeague": {
-            "id": 115,
-            "name": "Grapefruit League",
-            "link": "/api/v1/league/115",
-            "abbreviation": "GL"
-          },
-          "allStarStatus": "N",
-          "id": 139,
-          "name": "Tampa Bay Rays",
-          "link": "/api/v1/teams/139"
-        },
-        "losingTeam": {
-          "springLeague": {
-            "id": 115,
-            "name": "Grapefruit League",
-            "link": "/api/v1/league/115",
-            "abbreviation": "GL"
-          },
-          "allStarStatus": "N",
-          "id": 147,
-          "name": "New York Yankees",
-          "link": "/api/v1/teams/147"
-        },
-        "description": "AL Division Series",
-        "shortDescription": "ALDS Game 5",
-        "result": "TB leads 2-0",
-        "shortName": "ALDS",
-        "abbreviation": "ALDS"
-      },
-      "homeTeam": "Tampa Bay Rays",
-      "awayTeam": "New York Yankees",
-      "opponent": "Tampa Bay Rays",
-      "yankeesHome": false,
-      "homeScore": null,
-      "awayScore": null,
-      "homeWinner": null,
-      "awayWinner": null,
-      "venue": {
-        "id": 12,
-        "name": "Tropicana Field",
-        "city": "St. Petersburg",
-        "state": "FL"
       },
       "broadcasts": [
         "TBS/HBO MAX",
