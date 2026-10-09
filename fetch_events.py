@@ -143,6 +143,8 @@ def normalize_game(game, venue_cache):
     return {
         "gamePk": game.get("gamePk"),
         "gameDate": game.get("gameDate"),
+        "officialDate": game.get("officialDate"),
+        "startTimeTBD": status.get("startTimeTBD"),
         "status": status.get("detailedState"),
         "statusAbstract": status.get("abstractGameState"),
         "gameType": game.get("gameType"),
