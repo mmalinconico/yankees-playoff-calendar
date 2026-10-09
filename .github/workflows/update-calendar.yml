@@ -44,6 +44,10 @@ jobs:
         if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
         run: pip install -r requirements.txt
 
+      - name: Run calendar regression tests
+        if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
+        run: python -m unittest discover -s tests -v
+
       - name: Fetch Yankees postseason schedule
         if: steps.window.outputs.active == 'true' || github.event_name == 'workflow_dispatch'
         run: python fetch_events.py
