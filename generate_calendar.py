@@ -1,6 +1,7 @@
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
 EVENTS_FILE = Path("events.json")
@@ -38,31 +39,44 @@ def format_utc(dt):
     ).strftime("%Y%m%dT%H%M%SZ")
 
 
-def format_date(dt):
-    return dt.strftime("%Y%m%d")
+EASTERN = ZoneInfo("America/New_York")
+
+
+def get_official_game_date(game):
+    """Use MLB's calendar date for an all-day TBD event."""
+    official = game.get("officialDate")
+    if official:
+        try:
+            return date.fromisoformat(official)
+        except ValueError:
+            pass
+
+    start = parse_game_date(game.get("gameDate"))
+    if start is None:
+        return None
+
+    return start.astimezone(EASTERN).date()
 
 
 def is_placeholder_time(game):
-    """
-    MLB uses :33 placeholder timestamps for postseason games
-    whose actual start times have not yet been announced.
-
-    Example:
-    2026-10-07T07:33:00Z -> 3:33 AM Eastern
-
-    A real MLB start time should replace this placeholder once
-    the schedule is finalized.
-    """
-    start = parse_game_date(
-        game.get("gameDate")
-    )
-
-    if start is None:
+    """Prefer MLB's explicit flag; recognize its observed fallback."""
+    if is_final_game(game):
         return False
 
-    return (
-        not is_final_game(game)
+    time_tbd = game.get("startTimeTBD")
+    if time_tbd is True:
+        return True
+    if time_tbd is False:
+        return False
+
+    start = parse_game_date(game.get("gameDate"))
+    # Legacy MLB postseason placeholder: 07:33 UTC.
+    # Do not classify every legitimate :33 first pitch as TBD.
+    return bool(
+        start
+        and start.hour == 7
         and start.minute == 33
+        and start.second == 0
     )
 
 
@@ -402,8 +416,11 @@ def should_keep_game(
         return False
 
     if is_placeholder_time(game):
-        return start.date() >= (
-            now - RETENTION
+        official_day = get_official_game_date(game)
+        if official_day is None:
+            return False
+        return official_day >= (
+            now.astimezone(EASTERN) - RETENTION
         ).date()
 
     end = start + GAME_DURATION
@@ -439,7 +456,7 @@ def build_event(
     ]
 
     if time_tbd:
-        event_date = start.date()
+        event_date = get_official_game_date(game)
 
         next_date = (
             event_date + timedelta(days=1)
@@ -500,6 +517,93 @@ def build_event(
     return lines
 
 
+def fold_ics_line(line):
+    """Fold content at 75 UTF-8 octets per RFC 5545."""
+    folded = []
+    segment = ""
+    octets = 0
+
+    for char in line:
+        size = len(char.encode("utf-8"))
+        if segment and octets + size > 75:
+            folded.append(segment)
+            segment = " " + char
+            octets = 1 + size
+        else:
+            segment += char
+            octets += size
+
+    folded.append(segment)
+    return folded
+
+
+def unfold_ics_lines(content):
+    """Restore logical lines, including previously folded ICS files."""
+    lines = []
+    for line in content.splitlines():
+        if line.startswith((" ", "\t")) and lines:
+            lines[-1] += line[1:]
+        else:
+            lines.append(line)
+    return lines
+
+
+def read_existing_event_versions():
+    """Look up previous stamps and content by stable event UID."""
+    if not OUTPUT_FILE.exists():
+        return {}
+
+    existing = {}
+    current = None
+    for line in unfold_ics_lines(
+        OUTPUT_FILE.read_text(encoding="utf-8")
+    ):
+        if line == "BEGIN:VEVENT":
+            current = [line]
+        elif current is not None:
+            current.append(line)
+            if line == "END:VEVENT":
+                uid = next(
+                    (x[4:] for x in current if x.startswith("UID:")),
+                    None,
+                )
+                stamp = next(
+                    (x for x in current if x.startswith("DTSTAMP:")),
+                    None,
+                )
+                if uid and stamp:
+                    content = tuple(
+                        x for x in current
+                        if not x.startswith("DTSTAMP:")
+                    )
+                    existing[uid] = (stamp, content)
+                current = None
+
+    return existing
+
+
+def preserve_unchanged_timestamp(event_lines, existing):
+    """Do not revise a calendar event whose details are unchanged."""
+    uid = next(
+        (x[4:] for x in event_lines if x.startswith("UID:")),
+        None,
+    )
+    prior = existing.get(uid)
+    if prior:
+        stamp, content = prior
+        without_stamp = tuple(
+            x for x in event_lines
+            if not x.startswith("DTSTAMP:")
+        )
+        if without_stamp == content:
+            for index, line in enumerate(event_lines):
+                if line.startswith("DTSTAMP:"):
+                    event_lines[index] = stamp
+                    break
+
+    return event_lines
+
+
 def main():
     if not EVENTS_FILE.exists():
         raise FileNotFoundError(
@@ -544,6 +648,7 @@ def main():
     series_states = build_series_states(
         games
     )
+    existing_versions = read_existing_event_versions()
 
     included = 0
 
@@ -573,6 +678,10 @@ def main():
         )
 
         if event_lines:
+            event_lines = preserve_unchanged_timestamp(
+                event_lines,
+                existing_versions,
+            )
             calendar_lines.extend(
                 event_lines
             )
@@ -582,11 +691,16 @@ def main():
         "END:VCALENDAR"
     )
 
-    OUTPUT_FILE.write_text(
-        "\r\n".join(calendar_lines)
-        + "\r\n",
-        encoding="utf-8",
-    )
+    folded_lines = []
+    for line in calendar_lines:
+        folded_lines.extend(fold_ics_line(line))
+
+    content = ("\r\n".join(folded_lines) + "\r\n").encode("utf-8")
+    if OUTPUT_FILE.exists() and OUTPUT_FILE.read_bytes() == content:
+        print(f"No calendar changes in {OUTPUT_FILE}")
+        return
+
+    OUTPUT_FILE.write_bytes(content)
 
     print(f"Wrote {OUTPUT_FILE}")
     print(
