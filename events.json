@@ -6,6 +6,8 @@
     {
       "gamePk": 849851,
       "gameDate": "2026-09-30T00:00:00Z",
+      "officialDate": "2026-09-29",
+      "startTimeTBD": false,
       "status": "Final",
       "statusAbstract": "Final",
       "gameType": "F",
@@ -70,6 +72,8 @@
     {
       "gamePk": 849848,
       "gameDate": "2026-10-01T00:00:00Z",
+      "officialDate": "2026-09-30",
+      "startTimeTBD": false,
       "status": "Final",
       "statusAbstract": "Final",
       "gameType": "F",
@@ -134,6 +138,8 @@
     {
       "gamePk": 849835,
       "gameDate": "2026-10-03T22:30:00Z",
+      "officialDate": "2026-10-03",
+      "startTimeTBD": false,
       "status": "Final",
       "statusAbstract": "Final",
       "gameType": "D",
@@ -199,6 +205,8 @@
     {
       "gamePk": 849839,
       "gameDate": "2026-10-06T00:00:00Z",
+      "officialDate": "2026-10-05",
+      "startTimeTBD": false,
       "status": "Final",
       "statusAbstract": "Final",
       "gameType": "D",
@@ -264,6 +272,8 @@
     {
       "gamePk": 849838,
       "gameDate": "2026-10-08T00:00:00Z",
+      "officialDate": "2026-10-07",
+      "startTimeTBD": false,
       "status": "Final",
       "statusAbstract": "Final",
       "gameType": "D",
